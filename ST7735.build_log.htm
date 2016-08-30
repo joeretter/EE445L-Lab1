@@ -8,35 +8,29 @@ Project File Date:  08/30/2016
 
 <h2>Output:</h2>
 Build target 'Lab1'
-compiling fixed.c...
+compiling main.c...
 ST7735.h(460): warning:  #1-D: last line of file ends without a newline
   #endif
-fixed.c(41): warning:  #1-D: last line of file ends without a newline
+fixed.h(8): warning:  #1295-D: Deprecated declaration ST7735_XYplotInit - give arg types
+  void ST7735_XYplotInit(); //specify the X and Y axes for an x-y scatter plot
+fixed.h(9): warning:  #1295-D: Deprecated declaration ST7735_XYplot - give arg types
+  void ST7735_XYplot(); //plot an array of (x,y) data
+main.c(18): warning:  #1-D: last line of file ends without a newline
   }
-fixed.c(14): warning:  #550-D: variable "tenths" was set but never used
-        int ones = 0, tenths = 0, hundredths = 0, thousandths = 0;
-fixed.c(14): warning:  #550-D: variable "hundredths" was set but never used
-        int ones = 0, tenths = 0, hundredths = 0, thousandths = 0;
-fixed.c(14): warning:  #550-D: variable "thousandths" was set but never used
-        int ones = 0, tenths = 0, hundredths = 0, thousandths = 0;
-fixed.c(17): warning:  #550-D: variable "sign" was set but never used
+main.c: 4 warnings, 0 errors
+linking...
+Program Size: Code=2836 RO-data=2052 RW-data=44 ZI-data=1028  
+".\ST7735.axf" - 0 Error(s), 4 Warning(s).
+-D: variable "sign" was set but never used
         char sign = ' ';
 fixed.c(18): warning:  #177-D: variable "decimal" was declared but never referenced
         char decimal = '.';
 fixed.c(19): warning:  #177-D: variable "str" was declared but never referenced
         char str[7];
 fixed.c: 8 warnings, 0 errors
-compiling main.c...
-fixed.h(8): warning:  #1295-D: Deprecated declaration ST7735_XYplotInit - give arg types
-  void ST7735_XYplotInit(); //specify the X and Y axes for an x-y scatter plot
-fixed.h(9): warning:  #1295-D: Deprecated declaration ST7735_XYplot - give arg types
-  void ST7735_XYplot(); //plot an array of (x,y) data
-main.c(11): warning:  #1-D: last line of file ends without a newline
-  }
-main.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=5432 RO-data=2052 RW-data=48 ZI-data=1024  
-".\ST7735.axf" - 0 Error(s), 11 Warning(s).
-</pre>
-</body>
-</html>
+Program Size: Code=6272 RO-data=2052 RW-data=48 ZI-data=1024  
+".\ST7735.axf" - 0 Error(s), 8 Warning(s).
+ - 1 Error(s), 8 Warning(s).
+Target not created
+reated
