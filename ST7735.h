@@ -455,4 +455,6 @@ void Output_On(void);
 // Output: none
 void Output_Color(uint32_t newColor);
 
+int fputc(int ch, FILE *f); //Joe added this line
+
 #endif
