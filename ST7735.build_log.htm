@@ -3,11 +3,25 @@
 <pre>
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
-C:\EE445L\Lab1\Lab1.uvproj
+C:\sandbox\ee445l\EE445L-Lab1\Lab1.uvproj
 Project File Date:  08/30/2016
 
 <h2>Output:</h2>
-Build target 'Lab1'
+Rebuild target 'Lab1'
+assembling startup.s...
+compiling PLL.c...
+compiling ST7735.c...
+ST7735.h(460): warning:  #1-D: last line of file ends without a newline
+  #endif
+ST7735.c: 1 warning, 0 errors
+compiling ST7735TestMain.c...
+ST7735.h(460): warning:  #1-D: last line of file ends without a newline
+  #endif
+ST7735TestMain.c: 1 warning, 0 errors
+compiling fixed.c...
+ST7735.h(460): warning:  #1-D: last line of file ends without a newline
+  #endif
+fixed.c: 1 warning, 0 errors
 compiling main.c...
 ST7735.h(460): warning:  #1-D: last line of file ends without a newline
   #endif
@@ -19,18 +33,10 @@ main.c(18): warning:  #1-D: last line of file ends without a newline
   }
 main.c: 4 warnings, 0 errors
 linking...
-Program Size: Code=2836 RO-data=2052 RW-data=44 ZI-data=1028  
-".\ST7735.axf" - 0 Error(s), 4 Warning(s).
--D: variable "sign" was set but never used
-        char sign = ' ';
-fixed.c(18): warning:  #177-D: variable "decimal" was declared but never referenced
-        char decimal = '.';
-fixed.c(19): warning:  #177-D: variable "str" was declared but never referenced
-        char str[7];
-fixed.c: 8 warnings, 0 errors
-linking...
-Program Size: Code=6272 RO-data=2052 RW-data=48 ZI-data=1024  
-".\ST7735.axf" - 0 Error(s), 8 Warning(s).
- - 1 Error(s), 8 Warning(s).
+Program Size: Code=2860 RO-data=2052 RW-data=44 ZI-data=1028  
+".\ST7735.axf" - 0 Error(s), 7 Warning(s).
+735.axf: Error: L6218E: Undefined symbol fput (referred from fixed.o).
+Not enough information to list image symbols.
+Finished: 1 information, 0 warning and 1 error messages.
+".\ST7735.axf" - 1 Error(s), 8 Warning(s).
 Target not created
-reated

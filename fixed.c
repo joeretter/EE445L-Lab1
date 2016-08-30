@@ -9,6 +9,8 @@
 
 #define MAX_PARAM 9999
 #define MIN_PARAM -9999
+#define SPACE 0x20
+#define NEWLINE 0x0A
 
 void ST7735_sDecOut3(int32_t x) {
 	int32_t ones = 0, tenths = 0, hundredths = 0, thousandths = 0;
@@ -18,8 +20,7 @@ void ST7735_sDecOut3(int32_t x) {
 	int32_t sign = 0x20; //ascii for space
 	int32_t decimal = 0x2E; //ascii for decimal
 	int32_t star = 0x2A; //ascii for *
-	char str[7];
-	
+
 	if(x < 0){
 		sign = 0x2D;
 		x = - x;
@@ -38,21 +39,22 @@ void ST7735_sDecOut3(int32_t x) {
 		tenths_ascii = tenths + 0x30;
 		hundredths_ascii = hundredths + 0x30;
 		thousandths_ascii = thousandths + 0x30;
-		//printf("%c%d%c%d%d%d\n", sign, ones, decimal, tenths, hundredths, thousandths);
-		//fputc(str, fp); // using dummy file pointer
+
 		fputc(sign, fp);
 		fputc(ones_ascii, fp);
 		fputc(decimal, fp);
 		fputc(tenths_ascii, fp);
 		fputc(hundredths_ascii, fp);
 		fputc(thousandths_ascii, fp);
+		fputc(NEWLINE, fp);
 	}else {
+		fputc(SPACE, fp);
 		fputc(star, fp);
 		fputc(decimal, fp);
 		fputc(star, fp);
 		fputc(star, fp);
 		fputc(star, fp);
-		//printf(" *.***\n");
+		fputc(NEWLINE, fp);
 	}
 	
 }
