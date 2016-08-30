@@ -72,7 +72,7 @@
 #include <stdint.h>
 #include "ST7735.h"
 #include "PLL.h"
-#include "../inc/tm4c123gh6pm.h"
+#include "tm4c123gh6pm.h"
 
 void DelayWait10ms(uint32_t n);
 
@@ -532,7 +532,7 @@ int main7(void){ int i; // main 7
   while(1){
   }
 }
-int main(void){  // main 2
+int main2(void){  // main 2
   int x, y, dx, dy;
 //  uint8_t red, green, blue;
   PLL_Init(Bus80MHz);                  // set system clock to 80 MHz

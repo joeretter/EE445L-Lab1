@@ -1,4 +1,4 @@
-//Joe Retter, 
+//Joe Retter, jmr5823
 //Brad Gray, bg22946
 //EE 445L MW 5-630PM
 //Lab 1
@@ -31,8 +31,9 @@ void ST7735_sDecOut3(int32_t x) {
 		tenths = temp_val % 10;
 		temp_val = temp_val / 10;
 		ones = temp_val / 10;
-		printf("%c%d%c%d%d%d\n", sign, ones, decimal, tenths, hundredths, thousandths);
+		//printf("%c%d%c%d%d%d\n", sign, ones, decimal, tenths, hundredths, thousandths);
 		//fputc(str, fp); // using dummy file pointer
+		fputc(ones, fp);
 	}else {
 		printf(" *.***\n");
 	}
