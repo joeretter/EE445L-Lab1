@@ -1,0 +1,13 @@
+*.uvopt
+*.bak
+*.o
+*.d
+*.a10ga
+*.swp
+*.axf
+*.dep
+*.lst
+*.crf
+*.lnp
+*.map
+*.htm
