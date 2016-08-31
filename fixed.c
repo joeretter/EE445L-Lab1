@@ -94,7 +94,6 @@ void ST7735_uBinOut8(uint32_t x) {
 	int resolution = 256; //resolution = 1/256 * 100
 	int conversion = 39; // (1/256)  * 100
 	FILE *fp;
-	int32_t sign = SPACE; 
 	
 	//getting numbers right of decimal
 	whole = x >> 8;
@@ -148,13 +147,10 @@ void ST7735_uBinOut8(uint32_t x) {
  * assumes minX < maxX, and miny < maxY
  */
 void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y, int32_t max_y){
-	uint32_t j; // main 1
- 
 	ST7735_InitR(INITR_REDTAB);
-	ST7735_OutString("  ");
+	ST7735_OutString("       ");
   ST7735_OutString(title);
-	ST7735_OutString("\n");
-  ST7735_PlotClear(min_y,max_y);
+  ST7735_PlotClear(0,200);
   minX = min_x;
   maxX = max_x;
 	minY = min_y;
@@ -170,9 +166,7 @@ void ST7735_XYplot(uint32_t num, int32_t *buf_x, int32_t *buf_y){
 		
 		for(k = 0; k < num; k++){
 				if(buf_x[k] >= minX && buf_x[k] <= maxX && buf_y[k] >= minY && buf_y[k] <= maxY){
-						ST7735_DrawPixel(buf_x[k], buf_y[k], 50);
+						ST7735_DrawPixel(buf_x[k], buf_y[k] + 30, 50);
 				}
 		}	
 }
-
-

@@ -12,8 +12,8 @@
 #include "fixed.h"
 
 int main(void) {
-	int32_t k[1] = {50};
-	int32_t q[1] = {50};
+	int32_t k[7] = {5, 10, 15, 20, 15, 10, 5};
+	int32_t q[7] = {5, 10, 15, 20, 15, 10, 5};
 	PLL_Init(Bus80MHz);                  // set system clock to 80 MHz
 	ST7735_InitR(INITR_REDTAB);
 /*
@@ -32,6 +32,6 @@ int main(void) {
 	ST7735_uBinOut8(255997);
 	ST7735_uBinOut8(256000);
 */	
-	ST7735_XYplotInit("part3", -1, 1, -1, 1);
-	ST7735_XYplot(1, k, q);
+	ST7735_XYplotInit("part3", -100, 100, -100, 100);
+	ST7735_XYplot(7, k, q);
 }
