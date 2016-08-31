@@ -95,33 +95,33 @@ void ST7735_uBinOut8(uint32_t x) {
 	int conversion = 39; // (1/256)  * 100
 	FILE *fp;
 	
-	//getting numbers right of decimal
-	whole = x >> 8;
-	hundreds = whole / 100;
-	whole = whole - (hundreds * 100);
-	tens = whole / 10;
-	whole = whole - (tens * 10);
-	ones = whole;
+	if(x > 0 && x < MAX_PARAM_PART2){		
+		//getting numbers right of decimal
+		whole = x >> 8;
+		hundreds = whole / 100;
+		whole = whole - (hundreds * 100);
+		tens = whole / 10;
+		whole = whole - (tens * 10);
+		ones = whole;
 	
-	//getting numbers left of decimal
-	fraction = (x % resolution) * conversion;
-	round = fraction % 100;
-	fraction = fraction / 100;
-	if (round > 49) {
-		fraction++;
-	}
-	hundredths = fraction % 10;
-	tenths = fraction / 10;
+		//getting numbers left of decimal
+		fraction = (x % resolution) * conversion;
+		round = fraction % 100;
+		fraction = fraction / 100;
+		if (round > 49) {
+			fraction++;
+		}
+		hundredths = fraction % 10;
+		tenths = fraction / 10;
 		
-	//convert all to ASCII
-	ones_ascii = ones + ASCII_CONV;
-	tens_ascii = tens + ASCII_CONV;
-	hundreds_ascii = hundreds + ASCII_CONV;
-	hundredths_ascii = hundredths + ASCII_CONV;
-	tenths_ascii = tenths + ASCII_CONV;
+		//convert all to ASCII
+		ones_ascii = ones + ASCII_CONV;
+		tens_ascii = tens + ASCII_CONV;
+		hundreds_ascii = hundreds + ASCII_CONV;
+		hundredths_ascii = hundredths + ASCII_CONV;
+		tenths_ascii = tenths + ASCII_CONV;
 	
-	//'print' to LCD
-	if(x > 0 && x < MAX_PARAM_PART2){	
+		//'print' to LCD
 		fputc(hundreds_ascii, fp);
 		fputc(tens_ascii, fp);
 		fputc(ones_ascii, fp);
@@ -134,7 +134,6 @@ void ST7735_uBinOut8(uint32_t x) {
 		fputc(STAR, fp);
 		fputc(STAR, fp);
 		fputc(DECIMAL, fp);
-		fputc(STAR, fp);
 		fputc(STAR, fp);
 		fputc(STAR, fp);
 		fputc(NEWLINE, fp);
@@ -163,10 +162,11 @@ void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y,
  */
 void ST7735_XYplot(uint32_t num, int32_t *buf_x, int32_t *buf_y){
 		uint32_t k;
+		int offset = 30; //offset for printing on LCD
 		
 		for(k = 0; k < num; k++){
 				if(buf_x[k] >= minX && buf_x[k] <= maxX && buf_y[k] >= minY && buf_y[k] <= maxY){
-						ST7735_DrawPixel(buf_x[k], buf_y[k] + 30, 50);
+						ST7735_DrawPixel(buf_x[k], buf_y[k] + offset, 50);
 				}
 		}	
 }
