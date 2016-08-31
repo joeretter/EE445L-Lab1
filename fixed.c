@@ -16,6 +16,8 @@
 #define STAR 0x2A
 #define ASCII_CONV 0x30;
 
+int minX, minY, maxX, maxY;
+
 void ST7735_sDecOut3(int32_t x) {
 	int32_t ones = 0, tenths = 0, hundredths = 0, thousandths = 0;
 	int32_t ones_ascii = 0, tenths_ascii = 0, hundredths_ascii = 0, thousandths_ascii = 0;
@@ -113,3 +115,26 @@ if(x > 0 && x < MAX_PARAM_PART2){
 		fputc(NEWLINE, fp);
 	}
 }
+
+void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y, int32_t max_y){
+	uint32_t j; // main 1
+ 
+	ST7735_InitR(INITR_REDTAB);
+	ST7735_OutString("  ");
+  ST7735_OutString(title);
+	ST7735_OutString("\n");
+  ST7735_PlotClear(min_y,max_y);
+  minX = min_x;
+  maxX = max_x;
+	minY = min_y;
+	maxY = max_y;
+	}
+
+void ST7735_XYplot(uint32_t num, int32_t *buf_x, int32_t *buf_y){
+		uint32_t k;
+		
+		for(k = 0; k < num; k++)
+				ST7735_DrawPixel(buf_x[k], buf_y[k], 50);
+}
+
+
