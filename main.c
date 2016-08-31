@@ -1,7 +1,8 @@
+//main.c
 //Joe Retter, jmr5823
 //Brad Gray, bg22946
-//EE 445L MW 5-630PM
 //Lab 1
+//31 Aug 2016
 
 #include <stdint.h>
 #include <stdio.h>

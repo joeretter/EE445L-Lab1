@@ -1,7 +1,8 @@
+//fixed.c
 //Joe Retter, jmr5823
 //Brad Gray, bg22946
-//EE 445L MW 5-630PM
 //Lab 1
+//31 Aug 2016
 
 #include <stdint.h>
 #include <stdio.h>
@@ -116,6 +117,17 @@ if(x > 0 && x < MAX_PARAM_PART2){
 	}
 }
 
+/**************ST7735_XYplotInit***************
+ Specify the X and Y axes for an x-y scatter plot
+ Draw the title and clear the plot area
+ Inputs:  title  ASCII string to label the plot, null-termination
+          minX   smallest X data value allowed, resolution= 0.001
+          maxX   largest X data value allowed, resolution= 0.001
+          minY   smallest Y data value allowed, resolution= 0.001
+          maxY   largest Y data value allowed, resolution= 0.001
+ Outputs: none
+ assumes minX < maxX, and miny < maxY
+*/
 void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y, int32_t max_y){
 	uint32_t j; // main 1
  
@@ -133,8 +145,12 @@ void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y,
 void ST7735_XYplot(uint32_t num, int32_t *buf_x, int32_t *buf_y){
 		uint32_t k;
 		
-		for(k = 0; k < num; k++)
-				ST7735_DrawPixel(buf_x[k], buf_y[k], 50);
+		for(k = 0; k < num; k++){
+				if(buf_x[k] >= minX && buf_x[k] <= maxX && buf_y[k] >= minY && buf_y[k] <= maxY){
+						ST7735_DrawPixel(buf_x[k], buf_y[k], 50);
+				}
+		}
+		
 }
 
 
