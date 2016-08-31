@@ -16,22 +16,32 @@
 #define DECIMAL 0x2E
 #define STAR 0x2A
 #define ASCII_CONV 0x30;
+#define NEGATIVE 0x2D;
 
-int minX, minY, maxX, maxY;
+int minX, minY, maxX, maxY; //global for drawing on LCD within set bounds
 
+/*
+ * Converts fixed point number to LCD
+ * Format signed 32-bit with resolution 0.001
+ * Range -9.999 to +9.999
+ * If the given int is within range, divide out into separate placeholder values
+ * by dividing by 10, convert to ASCII, and write data to LCD
+ * If out of range, display **.***
+ */
 void ST7735_sDecOut3(int32_t x) {
 	int32_t ones = 0, tenths = 0, hundredths = 0, thousandths = 0;
 	int32_t ones_ascii = 0, tenths_ascii = 0, hundredths_ascii = 0, thousandths_ascii = 0;
-	int32_t temp_val;
-	FILE *fp;
-	int32_t sign = SPACE; //ascii for space
+	int32_t temp_val;			
+	FILE *fp; 						//not used, but fputc call required a file pointer parameter
+	int32_t sign = SPACE; //if positive, just want a space instead of '+'
 	
 	if(x < 0){
-		sign = 0x2D; //negative sign
-		x = - x;
+		sign = NEGATIVE; 
+		x = - x; 						//the sign is set appropriately; deal with abs value for ease
 	}
 	
 	if(x > MIN_PARAM_PART1 && x < MAX_PARAM_PART1) {
+		
 		temp_val = x / 10;
 		thousandths = x % 10;
 		hundredths = temp_val % 10;
@@ -40,11 +50,13 @@ void ST7735_sDecOut3(int32_t x) {
 		temp_val = temp_val / 10;
 		ones = temp_val % 10;
 		
+		//Get ASCII values as needed
 		ones_ascii = ones + ASCII_CONV;
 		tenths_ascii = tenths + ASCII_CONV;
 		hundredths_ascii = hundredths + ASCII_CONV;
 		thousandths_ascii = thousandths + ASCII_CONV;
-
+		
+		//write everything to LCD
 		fputc(sign, fp);
 		fputc(ones_ascii, fp);
 		fputc(DECIMAL, fp);
@@ -52,7 +64,7 @@ void ST7735_sDecOut3(int32_t x) {
 		fputc(hundredths_ascii, fp);
 		fputc(thousandths_ascii, fp);
 		fputc(NEWLINE, fp);
-	}else {
+	}else { 						
 		fputc(SPACE, fp);
 		fputc(STAR, fp);
 		fputc(DECIMAL, fp);
@@ -64,6 +76,17 @@ void ST7735_sDecOut3(int32_t x) {
 	
 }
 
+/*
+ * Converts binary fixed-point to LCD 
+ * unsigned 32-bit binary fixed-point with a resolution of 1/256. 
+ * The full-scale range is from 0 to 999.99. 
+ * If the integer part is larger than 256000, it signifies an error. 
+ * 1/256 ~ 0.0039
+ * For left of decimal, right shift to divide by resolution (256)
+ * For fraction, multiply by conversion (39), then divide by base 10 as needed
+ * to separate placeholders
+ * If outside bounds, print ***.**
+ */
 void ST7735_uBinOut8(uint32_t x) {
 	int whole, fraction, round, ones, tens, hundreds;
 	int tenths, tenths_ascii, hundredths, hundredths_ascii;
@@ -71,7 +94,7 @@ void ST7735_uBinOut8(uint32_t x) {
 	int resolution = 256; //resolution = 1/256 * 100
 	int conversion = 39; // (1/256)  * 100
 	FILE *fp;
-	int32_t sign = SPACE; //ascii for space
+	int32_t sign = SPACE; 
 	
 	//getting numbers right of decimal
 	whole = x >> 8;
@@ -91,13 +114,15 @@ void ST7735_uBinOut8(uint32_t x) {
 	hundredths = fraction % 10;
 	tenths = fraction / 10;
 		
+	//convert all to ASCII
 	ones_ascii = ones + ASCII_CONV;
 	tens_ascii = tens + ASCII_CONV;
 	hundreds_ascii = hundreds + ASCII_CONV;
 	hundredths_ascii = hundredths + ASCII_CONV;
 	tenths_ascii = tenths + ASCII_CONV;
 	
-if(x > 0 && x < MAX_PARAM_PART2){	
+	//'print' to LCD
+	if(x > 0 && x < MAX_PARAM_PART2){	
 		fputc(hundreds_ascii, fp);
 		fputc(tens_ascii, fp);
 		fputc(ones_ascii, fp);
@@ -117,17 +142,11 @@ if(x > 0 && x < MAX_PARAM_PART2){
 	}
 }
 
-/**************ST7735_XYplotInit***************
- Specify the X and Y axes for an x-y scatter plot
- Draw the title and clear the plot area
- Inputs:  title  ASCII string to label the plot, null-termination
-          minX   smallest X data value allowed, resolution= 0.001
-          maxX   largest X data value allowed, resolution= 0.001
-          minY   smallest Y data value allowed, resolution= 0.001
-          maxY   largest Y data value allowed, resolution= 0.001
- Outputs: none
- assumes minX < maxX, and miny < maxY
-*/
+/*
+ * Sets the X and Y axes for an x-y scatter plot, storing in global variables
+ * Clears the LCD from any previous work, printing title at top of LCD
+ * assumes minX < maxX, and miny < maxY
+ */
 void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y, int32_t max_y){
 	uint32_t j; // main 1
  
@@ -142,6 +161,10 @@ void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y,
 	maxY = max_y;
 	}
 
+/*
+ * Plots an array of (x,y) data with given buf arrays
+ * neglect any points outside the minX maxY minY maxY bounds
+ */
 void ST7735_XYplot(uint32_t num, int32_t *buf_x, int32_t *buf_y){
 		uint32_t k;
 		
@@ -149,8 +172,7 @@ void ST7735_XYplot(uint32_t num, int32_t *buf_x, int32_t *buf_y){
 				if(buf_x[k] >= minX && buf_x[k] <= maxX && buf_y[k] >= minY && buf_y[k] <= maxY){
 						ST7735_DrawPixel(buf_x[k], buf_y[k], 50);
 				}
-		}
-		
+		}	
 }
 
 
