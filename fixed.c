@@ -40,7 +40,7 @@ void ST7735_sDecOut3(int32_t x) {
 		x = - x; 						//the sign is set appropriately; deal with abs value for ease
 	}
 	
-	if(x > MIN_PARAM_PART1 && x < MAX_PARAM_PART1) {
+	if(x >= MIN_PARAM_PART1 && x < MAX_PARAM_PART1) {
 		
 		temp_val = x / 10;
 		thousandths = x % 10;
@@ -95,7 +95,7 @@ void ST7735_uBinOut8(uint32_t x) {
 	int conversion = 39; // (1/256)  * 100
 	FILE *fp;
 	
-	if(x > 0 && x < MAX_PARAM_PART2){		
+	if(x >= 0 && x < MAX_PARAM_PART2){		
 		//getting numbers right of decimal
 		whole = x >> 8;
 		hundreds = whole / 100;
@@ -120,6 +120,13 @@ void ST7735_uBinOut8(uint32_t x) {
 		hundreds_ascii = hundreds + ASCII_CONV;
 		hundredths_ascii = hundredths + ASCII_CONV;
 		tenths_ascii = tenths + ASCII_CONV;
+		
+		if (hundreds == 0){
+			hundreds_ascii = SPACE;
+			if (tens == 0) {
+				tens_ascii = SPACE;
+			}
+		}
 	
 		//'print' to LCD
 		fputc(hundreds_ascii, fp);
@@ -149,7 +156,7 @@ void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y,
 	ST7735_InitR(INITR_REDTAB);
 	ST7735_OutString("       ");
   ST7735_OutString(title);
-  ST7735_PlotClear(0,200);
+  ST7735_PlotClear(0,4095);
   minX = min_x;
   maxX = max_x;
 	minY = min_y;
@@ -162,11 +169,14 @@ void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y,
  */
 void ST7735_XYplot(uint32_t num, int32_t *buf_x, int32_t *buf_y){
 		uint32_t k;
-		int offset = 30; //offset for printing on LCD
+	  int32_t i, j;
+		int offset = 32; //offset for printing on LCD per Lab1 docs
 		
 		for(k = 0; k < num; k++){
-				if(buf_x[k] >= minX && buf_x[k] <= maxX && buf_y[k] >= minY && buf_y[k] <= maxY){
-						ST7735_DrawPixel(buf_x[k], buf_y[k] + offset, 50);
+				if(buf_x[k] >= minX && buf_x[k] <= maxX && buf_y[k] <= minY && buf_y[k] >= maxY){
+						i = (127*(buf_x[k]-minX))/(maxX - minX);
+						j = 32+(127*(maxY-buf_y[k]))/(maxY - minY);
+						ST7735_DrawPixel(i, j + 32, ST7735_BLUE);
 				}
 		}	
 }
