@@ -1,8 +1,12 @@
 //fixed.h
 //Joe Retter, jmr5823
 //Brad Gray, bg22946
+//Initial Creation Date: 29 Aug 2016
+//Descritpion: Contains declarations for functions that print fixed
+//point numbers and plot points of the ST7735 LCD screen
 //Lab 1
-//31 Aug 2016
+//TA: Mahesh
+//Date of Last Revision: 1 Sep 2016
 
 
 /****************ST7735_sDecOut3***************

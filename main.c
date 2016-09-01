@@ -1,8 +1,12 @@
 //main.c
 //Joe Retter, jmr5823
 //Brad Gray, bg22946
+//Initial Creation Date: 29 Aug 2016
+//Descritpion: Test file to demo the functionality of fixed.c
 //Lab 1
-//31 Aug 2016
+//TA: Mahesh
+//Date of Last Revision: 1 Sep 2016
+
 
 #include <stdint.h>
 #include <stdio.h>
@@ -20,9 +24,16 @@ int main(void) {
 	PLL_Init(Bus80MHz);    // set system clock to 80 MHz
 	ST7735_InitR(INITR_REDTAB);
 
-	//ST7735_sDecOut3(8912);
-	//ST7735_sDecOut3(890980);
-	//ST7735_sDecOut3(-2);
+	ST7735_sDecOut3(-100000);
+	ST7735_sDecOut3(-10000);
+	ST7735_sDecOut3(-9999);
+	ST7735_sDecOut3(-999);
+	ST7735_sDecOut3(-1);
+	ST7735_sDecOut3(-0);
+	ST7735_sDecOut3(123);
+	ST7735_sDecOut3(1234);
+	ST7735_sDecOut3(9999);
+	ST7735_sDecOut3(10000);
 /*
 	ST7735_uBinOut8(-64);
 	ST7735_uBinOut8(0);
@@ -35,8 +46,8 @@ int main(void) {
 	ST7735_uBinOut8(30000);
 	ST7735_uBinOut8(255997);
 	ST7735_uBinOut8(256000);
-*/	
-	ST7735_XYplotInit("part3", 0, 127, 32, 159);
-	ST7735_XYplot(12, x, y);
-	ST7735_XYplot(12, x2, y2);
+	*/
+//	ST7735_XYplotInit("part3", 0, 127, 32, 159);
+//	ST7735_XYplot(12, x, y);
+//	ST7735_XYplot(12, x2, y2);
 }

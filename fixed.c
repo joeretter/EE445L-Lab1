@@ -1,8 +1,13 @@
 //fixed.c
 //Joe Retter, jmr5823
 //Brad Gray, bg22946
+//Initial Creation Date: 29 Aug 2016
+//Descritpion: Contains definitions for functions that print fixed
+//point numbers and plot points of the ST7735 LCD screen
 //Lab 1
-//31 Aug 2016
+//TA: Mahesh
+//Date of Last Revision: 1 Sep 2016
+
 
 #include <stdint.h>
 #include <stdio.h>
@@ -40,7 +45,7 @@ void ST7735_sDecOut3(int32_t x) {
 		x = - x; 						//the sign is set appropriately; deal with abs value for ease
 	}
 	
-	if(x >= MIN_PARAM_PART1 && x < MAX_PARAM_PART1) {
+	if(x >= MIN_PARAM_PART1 && x <= MAX_PARAM_PART1) {
 		
 		temp_val = x / 10;
 		thousandths = x % 10;

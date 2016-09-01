@@ -25,13 +25,18 @@ fixed.c: 1 warning, 0 errors
 compiling main.c...
 ST7735.h(460): warning:  #1-D: last line of file ends without a newline
   #endif
-main.c: 1 warning, 0 errors
+main.c(16): warning:  #177-D: variable "x" was declared but never referenced
+        int32_t x[12] = {30, 35, 40, 45, 40, 35, 30, 25, 20, 15, 20, 25};
+main.c(17): warning:  #177-D: variable "y" was declared but never referenced
+        int32_t y[12] = {10, 15, 20, 25, 30, 35, 40, 35, 30, 25, 20, 15};
+main.c(18): warning:  #177-D: variable "x2" was declared but never referenced
+        int32_t x2[12] = {60, 65, 70, 75, 70, 65, 60, 55, 50, 45, 50, 55};
+main.c(19): warning:  #177-D: variable "y2" was declared but never referenced
+        int32_t y2[12] = {40, 45, 50, 55, 60, 65, 70, 65, 60, 55, 50, 45};
+main.c: 5 warnings, 0 errors
 linking...
-Program Size: Code=3072 RO-data=2244 RW-data=60 ZI-data=1028  
-".\ST7735.axf" - 0 Error(s), 4 Warning(s).
-ne
-  #endif
-main.c: 1 warning, 0 errors
-linking...
-Program Size: Code=3044 RO-data=2148 RW-data=60 ZI-data=1028  
-".\ST7735.axf" - 0 Error(s), 5 Warning(s).
+Program Size: Code=3004 RO-data=2244 RW-data=44 ZI-data=1028  
+".\ST7735.axf" - 0 Error(s), 8 Warning(s).
+
+Program Size: Code=3308 RO-data=2244 RW-data=44 ZI-data=1028  
+".\ST7735.axf" - 0 Error(s), 9 Warning(s).
