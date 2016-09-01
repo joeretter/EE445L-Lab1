@@ -95,7 +95,7 @@ void ST7735_uBinOut8(uint32_t x) {
 	int conversion = 39; // (1/256)  * 100
 	FILE *fp;
 	
-	if(x >= 0 && x < MAX_PARAM_PART2){		
+	if(x < MAX_PARAM_PART2){		
 		//getting numbers right of decimal
 		whole = x >> 8;
 		hundreds = whole / 100;
@@ -151,6 +151,7 @@ void ST7735_uBinOut8(uint32_t x) {
  * Sets the X and Y axes for an x-y scatter plot, storing in global variables
  * Clears the LCD from any previous work, printing title at top of LCD
  * assumes minX < maxX, and miny < maxY
+ * mins and maxes are in LCD coordinates, not cartesian
  */
 void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y, int32_t max_y){
 	ST7735_InitR(INITR_REDTAB);
@@ -166,17 +167,18 @@ void ST7735_XYplotInit(char *title, int32_t min_x, int32_t max_x, int32_t min_y,
 /*
  * Plots an array of (x,y) data with given buf arrays
  * neglect any points outside the minX maxY minY maxY bounds
+ * converts given cartesian coordinates into LCD coordinates, displaying
+ * if within the set min & max global variables 
  */
 void ST7735_XYplot(uint32_t num, int32_t *buf_x, int32_t *buf_y){
 		uint32_t k;
-	  int32_t i, j;
-		int offset = 32; //offset for printing on LCD per Lab1 docs
+	  int32_t x, y;
 		
 		for(k = 0; k < num; k++){
-				if(buf_x[k] >= minX && buf_x[k] <= maxX && buf_y[k] <= minY && buf_y[k] >= maxY){
-						i = (127*(buf_x[k]-minX))/(maxX - minX);
-						j = 32+(127*(maxY-buf_y[k]))/(maxY - minY);
-						ST7735_DrawPixel(i, j + 32, ST7735_BLUE);
+				if(buf_x[k] >= minX && buf_x[k] < maxX && (maxY - buf_y[k] >= minY) && (maxY - buf_y[k] < maxY)){
+						x = buf_x[k];
+						y = maxY - buf_y[k];
+						ST7735_DrawPixel(x, y, ST7735_BLUE);
 				}
 		}	
 }
